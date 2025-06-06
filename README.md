@@ -63,7 +63,7 @@ These images showcase the output of various workflows, including 3D cartoons, av
 2. *Download Workflows*:
    - Clone this repository to your local machine:
      bash
-     git clone https://github.com/your-username/comfyui-workshop.git
+     git clone https://github.com/uluferai/workshop.git
      
 
 3. *Load Workflows*:
