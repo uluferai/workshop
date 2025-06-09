@@ -1,0 +1,585 @@
+{
+  "id": "9b3d2e7f-5e4a-4ebe-8ee7-b740ae25b6d4",
+  "revision": 0,
+  "last_node_id": 34,
+  "last_link_id": 89,
+  "nodes": [
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        1422,
+        387
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 42
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 83
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 34,
+      "type": "MarkdownNote",
+      "pos": [
+        16,
+        448
+      ],
+      "size": [
+        336,
+        128
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "### Learn more about this workflow\n\n> [Outpaint - ComfyUI_examples](https://comfyanonymous.github.io/ComfyUI_examples/inpaint/#outpainting) — Overview\n> \n> [Outpainting - docs.comfy.org](https://docs.comfy.org/tutorials/basic/outpaint) — Explanation of concepts and step-by-step tutorial"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 30,
+      "type": "ImagePadForOutpaint",
+      "pos": [
+        252.03269958496094,
+        726.62841796875
+      ],
+      "size": [
+        315,
+        174
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 85
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            87
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": [
+            86
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "ImagePadForOutpaint"
+      },
+      "widgets_values": [
+        512,
+        0,
+        512,
+        0,
+        129
+      ]
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        1671,
+        384
+      ],
+      "size": [
+        360.54998779296875,
+        441.5299987792969
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 22
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 26,
+      "type": "VAEEncodeForInpaint",
+      "pos": [
+        617,
+        720
+      ],
+      "size": [
+        226.8000030517578,
+        98
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 87
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 84
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            72
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "VAEEncodeForInpaint"
+      },
+      "widgets_values": [
+        64
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        434,
+        371
+      ],
+      "size": [
+        425.2799987792969,
+        180.61000061035156
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 82
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "blurry, deformed, low quality,bad art,ugly,text,watermark,ugly, deformed, blurry, out of focus, extra limbs, long neck, missing fingers, lowres, jpeg artifacts, overexposed, bad anatomy, creepy, bad hands, bad face, worst quality"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        432,
+        158
+      ],
+      "size": [
+        422.81243896484375,
+        161.2169189453125
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 81
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "dark blue atmosphere spaceship interior   background consists of blurred \ncreating a dreamy and harmonious depth. \nsharp foreground, soft background, cinematic depth of field, balanced focus\""
+      ]
+    },
+    {
+      "id": 29,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        17,
+        303
+      ],
+      "size": [
+        315,
+        98
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            80
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            81,
+            82
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 2,
+          "links": [
+            83,
+            84
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "models": [
+          {
+            "name": "512-inpainting-ema.safetensors",
+            "url": "https://huggingface.co/stabilityai/stable-diffusion-2-inpainting/resolve/main/512-inpainting-ema.safetensors?download=true",
+            "directory": "checkpoints"
+          }
+        ]
+      },
+      "widgets_values": [
+        "512-inpainting-ema.safetensors"
+      ]
+    },
+    {
+      "id": 20,
+      "type": "LoadImage",
+      "pos": [
+        -115.77914428710938,
+        726.8905029296875
+      ],
+      "size": [
+        344,
+        346
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            85
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_00098_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "KSampler",
+      "pos": [
+        940,
+        180
+      ],
+      "size": [
+        315,
+        474
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 80
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 4
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 72
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            42
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.18",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        277029591008640,
+        "randomize",
+        20,
+        7,
+        "euler_ancestral",
+        "simple",
+        1
+      ]
+    }
+  ],
+  "links": [
+    [
+      4,
+      6,
+      0,
+      3,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      7,
+      0,
+      3,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      22,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      42,
+      3,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      72,
+      26,
+      0,
+      3,
+      3,
+      "LATENT"
+    ],
+    [
+      80,
+      29,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      81,
+      29,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      82,
+      29,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      83,
+      29,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      84,
+      29,
+      2,
+      26,
+      1,
+      "VAE"
+    ],
+    [
+      85,
+      20,
+      0,
+      30,
+      0,
+      "IMAGE"
+    ],
+    [
+      86,
+      30,
+      1,
+      26,
+      2,
+      "MASK"
+    ],
+    [
+      87,
+      30,
+      0,
+      26,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Load image and pad for outpainting",
+      "bounding": [
+        -120,
+        600,
+        1038,
+        509
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8564988730278087,
+      "offset": [
+        401.998051374542,
+        -76.15277897739304
+      ]
+    },
+    "frontendVersion": "1.20.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
