@@ -1,0 +1,217 @@
+{
+  "id": "a82c8a6c-530c-4f67-b5ed-ba15092444c3",
+  "revision": 0,
+  "last_node_id": 7,
+  "last_link_id": 8,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "ChatterboxVC",
+      "pos": [
+        1652.5933837890625,
+        -1204.788330078125
+      ],
+      "size": [
+        318.2839050292969,
+        351.7422180175781
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source_audio",
+          "type": "AUDIO",
+          "link": 8
+        },
+        {
+          "name": "target_voice_audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "converted_audio",
+          "type": "AUDIO",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-chatterboxtts",
+        "ver": "1.0.1",
+        "Node name for S&R": "ChatterboxVC"
+      },
+      "widgets_values": [
+        "resembleai_default_voice",
+        "cuda"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadAudio",
+      "pos": [
+        1026.5489501953125,
+        -1418.97314453125
+      ],
+      "size": [
+        270,
+        136
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "cem_orginal.mp3",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 6,
+      "type": "ChatterBoxVoiceTTS",
+      "pos": [
+        964.4281616210938,
+        -1141.535888671875
+      ],
+      "size": [
+        400,
+        372
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "generation_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "ShmuelRonen/ComfyUI_ChatterBox_Voice",
+        "ver": "6e5fc4e268656235c50e1e791f6b5d7afe615677",
+        "Node name for S&R": "ChatterBoxVoiceTTS"
+      },
+      "widgets_values": [
+        "Hello! This is the enhanced ChatterboxTTS with bundled support and improved chunking. It can handle very long texts by intelligently splitting them into smaller segments.",
+        "auto",
+        0.5,
+        0.8,
+        0.5,
+        396787111,
+        "randomize",
+        "",
+        true,
+        400,
+        "auto",
+        100
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PreviewAudio",
+      "pos": [
+        2173.74951171875,
+        -1162.4761962890625
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      2,
+      1,
+      0,
+      3,
+      0,
+      "AUDIO"
+    ],
+    [
+      7,
+      2,
+      0,
+      1,
+      1,
+      "AUDIO"
+    ],
+    [
+      8,
+      6,
+      0,
+      1,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9689991579167331,
+      "offset": [
+        -553.8826128662089,
+        1624.2270785327
+      ]
+    },
+    "frontendVersion": "1.20.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
