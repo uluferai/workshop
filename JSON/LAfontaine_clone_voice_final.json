@@ -1,0 +1,161 @@
+{
+  "id": "5ccd82cb-6978-4e4d-ae09-364396ce80cb",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 4,
+  "nodes": [
+    {
+      "id": 5,
+      "type": "LoadAudio",
+      "pos": [
+        1106.545166015625,
+        -1126.2735595703125
+      ],
+      "size": [
+        270,
+        136
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.32",
+        "Node name for S&R": "LoadAudio",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "Don LaFontaine; The Voice.wav",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 1,
+      "type": "SparkTTS_AdvVoiceClone",
+      "pos": [
+        1496.5635986328125,
+        -1239.596435546875
+      ],
+      "size": [
+        456.2148742675781,
+        527.8759765625
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-spark-tts",
+        "ver": "1.1.1",
+        "Node name for S&R": "SparkTTS_AdvVoiceClone",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "In a world... where the line between memory and madness has vanished...\n\nYou wake up in an abandoned asylum. No exit. No explanation. Only the echo of your own name... whispered by something that isn't there.\n\nEvery door you open remembers you.  \nEvery shadow knows your fear.  \nAnd every choice you make... feeds the darkness.\n\nThis fall...  \nTerror isn’t something you run from...  \nIt’s something you wear.\n\nAre you sure you're alone?\n\nWelcome to SANCTUM —  \n\n",
+        "Voice Style: Deep, cinematic, dramatic male narrator voice, similar to Don LaFontaine\nAccent: Neutral American\nEmotion: Ominous, suspenseful, slowly intensifying\nPacing: Slow with dramatic pauses, gradually building tension\nUse Case: Horror game trailer\nInstructions: Read the following lines with rising suspense. Emphasize the pauses and let the fear breathe in the silence.",
+        "high",
+        "moderate",
+        5000,
+        "In a world... where the line between memory and madness has vanished...\n\nYou wake up in an abandoned asylum. No exit. No explanation. Only the echo of your own name... whispered by something that isn't there.\n\nEvery door you open remembers you.  \nEvery shadow knows your fear.  \nAnd every choice you make... feeds the darkness.\n\nThis fall...  \nTerror isn’t something you run from...  \nIt’s something you wear.\n\nAre you sure you're alone?\n\nWelcome to SANCTUM —  ",
+        0.8,
+        50,
+        0.95
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PreviewAudio",
+      "pos": [
+        2109.819580078125,
+        -1184.85498046875
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.32",
+        "Node name for S&R": "PreviewAudio",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      2,
+      1,
+      0,
+      3,
+      0,
+      "AUDIO"
+    ],
+    [
+      4,
+      5,
+      0,
+      1,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "frontendVersion": "1.23.3",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "ds": {
+      "scale": 1.4187116671058897,
+      "offset": [
+        -1078.744172073423,
+        1460.0363638745675
+      ]
+    },
+    "links_added_by_ue": []
+  },
+  "version": 0.4
+}
