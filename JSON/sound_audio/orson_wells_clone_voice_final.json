@@ -1,0 +1,161 @@
+{
+  "id": "5ccd82cb-6978-4e4d-ae09-364396ce80cb",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "SparkTTS_AdvVoiceClone",
+      "pos": [
+        1496.5635986328125,
+        -1239.596435546875
+      ],
+      "size": [
+        456.2148742675781,
+        527.8759765625
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-spark-tts",
+        "ver": "1.1.1",
+        "Node name for S&R": "SparkTTS_AdvVoiceClone"
+      },
+      "widgets_values": [
+        "This is the SparkTTS advanced voice clone node, you can clone the voice from a reference audio with control over pitch and speed. Enter reference text to improve voice cloning quality. Currently we only support English and Chinese.",
+        "",
+        "moderate",
+        "moderate",
+        3000,
+        "",
+        0.8,
+        50,
+        0.95,
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 5,
+      "type": "LoadAudio",
+      "pos": [
+        1106.545166015625,
+        -1126.2735595703125
+      ],
+      "size": [
+        270,
+        136
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.32",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "Orson_Wells.mp3",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PreviewAudio",
+      "pos": [
+        2109.819580078125,
+        -1184.85498046875
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.32",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      2,
+      1,
+      0,
+      3,
+      0,
+      "AUDIO"
+    ],
+    [
+      4,
+      5,
+      0,
+      1,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "frontendVersion": "1.18.9",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

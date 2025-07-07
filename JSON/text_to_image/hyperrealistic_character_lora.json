@@ -1,0 +1,249 @@
+{
+  "last_node_id": 8,
+  "last_link_id": 7,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "VHS_LoadImages",
+      "pos": [50, 50],
+      "size": [300, 220],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [1],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadImages"
+      },
+      "widgets_values": {
+        "directory": "character_photos",
+        "image_load_cap": 15,
+        "skip_first_images": 0,
+        "select_every_nth": 1,
+        "choose folder to upload": "image"
+      }
+    },
+    {
+      "id": 2,
+      "type": "ImageScale",
+      "pos": [400, 50],
+      "size": [300, 150],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [2, 3],
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScale"
+      },
+      "widgets_values": [
+        "lanczos",
+        768,
+        768,
+        "center"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PreviewImage",
+      "pos": [400, 250],
+      "size": [300, 200],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 4,
+      "type": "Lora Training in ComfyUI",
+      "pos": [750, 50],
+      "size": [350, 300],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Lora Training in ComfyUI"
+      },
+      "widgets_values": [
+        "realisticVisionV60B1_v51VAE.safetensors",
+        "character_photos",
+        768,
+        15,
+        25,
+        "hyperrealistic_character_v1",
+        0.0001,
+        "models/loras"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "SaveImage",
+      "pos": [750, 400],
+      "size": [300, 200],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "lora_training_samples"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "Note",
+      "pos": [50, 300],
+      "size": [300, 200],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "HYPERREALISTIC CHARACTER LORA TRAINING\n\nOptimal Settings:\n- 4-15 images (ideal range)\n- 768x768 resolution for detail\n- 15-25 epochs for character\n- Low learning rate (0.0001)\n- Use realistic base model\n\nTrigger words:\n- [character_name]\n- hyperrealistic portrait\n- detailed face\n- professional photography"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [1150, 50],
+      "size": [300, 150],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [6]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "hyperrealistic portrait of [character_name], detailed face, professional photography, high resolution, sharp focus, realistic lighting"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "CLIPTextEncode",
+      "pos": [1150, 250],
+      "size": [300, 150],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "blurry, low quality, cartoon, anime, painting, sketch, unrealistic, bad anatomy, distorted face"
+      ]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "IMAGE"],
+    [2, 2, 0, 3, 0, "IMAGE"],
+    [3, 2, 0, 4, 0, "IMAGE"],
+    [4, 2, 0, 5, 0, "IMAGE"],
+    [5, 4, 1, 7, 0, "CLIP"],
+    [6, 7, 0, 4, 1, "CONDITIONING"],
+    [7, 4, 1, 8, 0, "CLIP"]
+  ],
+  "groups": [
+    {
+      "title": "Image Loading & Preprocessing",
+      "bounding": [30, 10, 690, 280],
+      "color": "#3f789e"
+    },
+    {
+      "title": "LoRA Training",
+      "bounding": [730, 10, 390, 380],
+      "color": "#8A8"
+    },
+    {
+      "title": "Prompt Engineering",
+      "bounding": [1130, 10, 340, 400],
+      "color": "#A88"
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
