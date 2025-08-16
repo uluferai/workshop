@@ -1,0 +1,410 @@
+{
+  "id": "24139a50-af2d-476b-93d9-2743285fab1b",
+  "revision": 0,
+  "last_node_id": 31,
+  "last_link_id": 51,
+  "nodes": [
+    {
+      "id": 24,
+      "type": "Note",
+      "pos": [
+        -219.62684631347656,
+        -343.5900573730469
+      ],
+      "size": [
+        390.0728454589844,
+        545.8046264648438
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "[LoadImage_Source] ─┐\n                    ├──▶ (source_image)\n                    │\n[LoadImage_Target] ─┼──▶ (input_image)\n                    │\n                    └──▶ (face_model)\n                        │\n       [ReActor 🔁 Fast Face Swap]\n                        │\n             [Preview Image / Save Image]\n\nComfyUI için **yüz değiştirme (face swap)** işlemi yapan temel bir **workflow (akış)** aşağıda verilmiştir. Bu akış, bir hedef görseldeki yüzü, başka bir kaynaktan alınan yüz ile değiştirir. Aşağıdaki yapı **ReActor - Fast Face Swap** nodunu kullanır ve giriş/çıkış adımlarını sıralı biçimde oluşturur.\n\n---\n\n## 🔧 **ComfyUI Face Swap Workflow (ReActor)**\n\n### 1. **Image Loader Nodes**\n\n* `Load Image (source)` → yüzü alınacak kaynak yüz görseli.\n* `Load Image (target)` → yüzün yerleştirileceği hedef görsel.\n\n### 2. **ReActor - Fast Face Swap Node**\n\nBağlantılar:\n\n* `input_image` → hedef (target) görsel (Load Image node'dan).\n* `source_image` → kaynak (source) yüz görseli (Load Image node'dan).\n* `face_model` → kaynakla aynı görsel veya farklı bir referans (çoğunlukla `source_image` ile aynı bağlanır).\n\nAyarlar:\n\n* **swap\\_model**: `inswapper_128.onnx`\n* **facedetection**: `retinaface_resnet50`\n* **face\\_restore\\_model**: `none` veya `codeformer`\n* **face\\_restore\\_visibility**: `1.0`\n* **codeformer\\_weight**: `0.5`\n* **enabled**: `ON`\n\n### 3. **Image Preview / Save Node**\n\n* `Preview Image` → sonucu görmek için\n* `Save Image` → çıktı görseli olarak kaydetmek için\n\n---\n\n## 🔁 Görsel Akış Şeması\n\n```\n[LoadImage_Source] ─┐\n                    ├──▶ (source_image)\n                    │\n[LoadImage_Target] ─┼──▶ (input_image)\n                    │\n                    └──▶ (face_model)\n                        │\n       [ReActor 🔁 Fast Face Swap]\n                        │\n             [Preview Image / Save Image]\n```\n\n---\n\n## 📦 Gerekli Modeller (Assets)\n\n* `inswapper_128.onnx`\n* `retinaface_resnet50`\n* (İsteğe bağlı) `codeformer.onnx` veya `gfpgan.onnx`\n\n---\n\n## ✅ Notlar\n\n* Daha iyi sonuçlar için hem kaynak hem hedef görsellerde yüzlerin net görünmesi önemlidir.\n* Aynı yüz üzerinde birden çok kişi varsa, `input_faces_index` ve `source_faces_index` değerlerini ayarlayarak doğru yüz seçilmelidir.\n* `face_restore_model` olarak `codeformer` seçildiğinde, yüz netliği ve detayı artırılabilir.\n\n---\n\nİstersen bu yapıyı `.json` dosyası olarak da hazırlayabilirim. Hazır akış dosyasına ihtiyacın var mı? Veya elindeki görsellerle özel olarak birleştirelim mi?\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 30,
+      "type": "SaveImage",
+      "pos": [
+        1197.607421875,
+        10.441848754882812
+      ],
+      "size": [
+        270,
+        270
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 49
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "SaveImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 28,
+      "type": "ReActorBuildFaceModel",
+      "pos": [
+        749.9856567382812,
+        254.95748901367188
+      ],
+      "size": [
+        342.8999938964844,
+        150
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 50
+        },
+        {
+          "name": "face_models",
+          "shape": 7,
+          "type": "FACE_MODEL",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FACE_MODEL",
+          "type": "FACE_MODEL",
+          "links": [
+            45
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ReActorBuildFaceModel",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        true,
+        false,
+        "default",
+        "Mean"
+      ]
+    },
+    {
+      "id": 31,
+      "type": "PreviewImage",
+      "pos": [
+        1319.65673828125,
+        -402.1893005371094
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 51
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 29,
+      "type": "PreviewImage",
+      "pos": [
+        1214.3687744140625,
+        -308.020263671875
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 48
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "PreviewImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 26,
+      "type": "LoadImage",
+      "pos": [
+        364.3279724121094,
+        17.49959945678711
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            43
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "yusuf (1).jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "LoadImage",
+      "pos": [
+        364.28826904296875,
+        -372.9689025878906
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            42,
+            50
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ChatGPT Image 28 Tem 2025 05_06_35.png",
+        "image"
+      ]
+    },
+    {
+      "id": 23,
+      "type": "ReActorFaceSwap",
+      "pos": [
+        815.9346923828125,
+        -283.8291320800781
+      ],
+      "size": [
+        288,
+        358
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 42
+        },
+        {
+          "name": "source_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 43
+        },
+        {
+          "name": "face_model",
+          "shape": 7,
+          "type": "FACE_MODEL",
+          "link": 45
+        },
+        {
+          "name": "face_boost",
+          "shape": 7,
+          "type": "FACE_BOOST",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SWAPPED_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            48,
+            49
+          ]
+        },
+        {
+          "name": "FACE_MODEL",
+          "type": "FACE_MODEL",
+          "links": null
+        },
+        {
+          "name": "ORIGINAL_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ReActorFaceSwap",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        true,
+        "inswapper_128.onnx",
+        "retinaface_resnet50",
+        "GFPGANv1.4.pth",
+        1,
+        0.5,
+        "no",
+        "no",
+        "0",
+        "0",
+        1
+      ]
+    }
+  ],
+  "links": [
+    [
+      42,
+      25,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      43,
+      26,
+      0,
+      23,
+      1,
+      "IMAGE"
+    ],
+    [
+      45,
+      28,
+      0,
+      23,
+      2,
+      "FACE_MODEL"
+    ],
+    [
+      48,
+      23,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      49,
+      23,
+      0,
+      30,
+      0,
+      "IMAGE"
+    ],
+    [
+      50,
+      25,
+      0,
+      28,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      23,
+      2,
+      31,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "frontendVersion": "1.23.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 1.3499666307128002,
+      "offset": [
+        -162.32391329529423,
+        367.2292406348066
+      ]
+    }
+  },
+  "version": 0.4
+}
