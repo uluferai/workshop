@@ -1,0 +1,960 @@
+{
+  "id": "24139a50-af2d-476b-93d9-2743285fab1b",
+  "revision": 0,
+  "last_node_id": 23,
+  "last_link_id": 40,
+  "nodes": [
+    {
+      "id": 11,
+      "type": "PrimitiveFloat",
+      "pos": [
+        410.1903381347656,
+        210.4737548828125
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            28,
+            29
+          ]
+        }
+      ],
+      "title": "FPS",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "PrimitiveFloat",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        25
+      ]
+    },
+    {
+      "id": 10,
+      "type": "FloatProcess",
+      "pos": [
+        775.839599609375,
+        385.2976379394531
+      ],
+      "size": [
+        270,
+        266
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_image",
+          "type": "IMAGE",
+          "link": 24
+        },
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 25
+        },
+        {
+          "name": "float_pipe",
+          "type": "FLOAT_PIPE",
+          "link": 23
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "widget": {
+            "name": "fps"
+          },
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "yuvraj108c/ComfyUI-FLOAT",
+        "ver": "eedad89090eaf60752ecdd90f389ffb6a9bb3525",
+        "Node name for S&R": "FloatProcess",
+        "widget_ue_connectable": {
+          "fps": true
+        }
+      },
+      "widgets_values": [
+        2,
+        1,
+        1,
+        25,
+        "none",
+        true,
+        982045898717762,
+        "fixed"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "LoadFloatModels",
+      "pos": [
+        404.4696350097656,
+        877.6525268554688
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "float_pipe",
+          "type": "FLOAT_PIPE",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "yuvraj108c/ComfyUI-FLOAT",
+        "ver": "eedad89090eaf60752ecdd90f389ffb6a9bb3525",
+        "Node name for S&R": "LoadFloatModels",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "float.pth"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "PreviewAudio",
+      "pos": [
+        18.151521682739258,
+        703.2664184570312
+      ],
+      "size": [
+        270,
+        88
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 30
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "PreviewAudio",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "OpenAIFMNode",
+      "pos": [
+        -693.398681640625,
+        667.1337280273438
+      ],
+      "size": [
+        565.3703002929688,
+        417.2511901855469
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-openai-fm",
+        "ver": "1.0.3",
+        "Node name for S&R": "OpenAIFMNode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "28 Temmuz 2025 itibariyle Türkiye siyasetinde gündem yine dopdolu... ama bu sefer de dopdolu olan sadece söylemler, eylemler hâlâ kargoya verilmedi. Takip edebilene aşk olsun!\n\nMeclis yine karıştı. Ancak bu sefer tartışmanın sebebi ekonomi, eğitim ya da dış politika değil. Milletvekilleri arasında çıkan son tartışma: \"Çay mı simit mi daha temel bir gıda?\"\n(Not: Bir vekil ‘ikisi de lüks artık’ dedi, anında susturuldu. Sebep: Gerçek konuştu.)\n\nMuhalefet, açıklama yaptı:\n“İktidarın ekonomi politikası, suya yazı yazmak gibi... ama mürekkep zamlı olduğu için yazamıyoruz.”\n\nİktidar cephesi ise umutlu:\n“Ekonomi iyiye gidiyor. Herkes kredi çekebiliyor artık. Geri ödeyebilen var mı, o ayrı konu.”\n\nYeni yasa tekliflerinden biri:\n“Vatandaşın birikimini korumak için yeni tedbirler alınıyor. Artık yastık altı paralar da dijital olarak takip edilecek. Yastık da vergiye tabi olabilir.”\n\nİstanbul’da ulaşım zammı gündemdeydi. Belediye başkanı şöyle dedi:\n“Toplu taşıma ücretleri artırıldı, çünkü halk artık daha az seyahat etmeli, evde oturmalı. Bu da karbon ayak izini düşürür.”\n\nGünün esprili manşeti (sanal gazete):\n\n“Ekonomiye Gönül Verenler Derneği: Gönül verdik ama cüzdan vermemiştik.”\n\nSiyasetçilerin sosyal medya performansı:\nHer sabah motivasyonla başlayan tweetler, öğlene doğru \"yanlış anlaşıldım\" açıklamalarıyla devam ediyor. Akşam ise \"hesap çalındı\" bahanesiyle siliniyor.\nKısa film tadında: Bir Günlük Vekil Hikayeleri.\n\n",
+        "ALLoy",
+        "News_Anchor",
+        ""
+      ]
+    },
+    {
+      "id": 15,
+      "type": "VAEDecode",
+      "pos": [
+        -659.5592651367188,
+        -30.214927673339844
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 32
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "VAEDecode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 17,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        -1339.56103515625,
+        229.78480529785156
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            38
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "EmptySD3LatentImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 19,
+      "type": "KSampler",
+      "pos": [
+        -994.560546875,
+        -33.21487045288086
+      ],
+      "size": [
+        315,
+        262
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 35
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 36
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 37
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 38
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            32
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "KSampler",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        850504273182472,
+        "randomize",
+        20,
+        1,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 20,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1420.56201171875,
+        174.78485107421875
+      ],
+      "size": [
+        422.8500061035156,
+        164.30999755859375
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 11,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            37
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Negative Prompt)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 21,
+      "type": "FluxGuidance",
+      "pos": [
+        -1234.5614013671875,
+        -129.21299743652344
+      ],
+      "size": [
+        211.60000610351562,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 40
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            36
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "FluxGuidance",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        3.5
+      ]
+    },
+    {
+      "id": 22,
+      "type": "MarkdownNote",
+      "pos": [
+        -1750.561767578125,
+        119.78518676757812
+      ],
+      "size": [
+        225,
+        88
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "🛈 [Learn more about this workflow](https://comfyanonymous.github.io/ComfyUI_examples/flux/#flux-dev-1)"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 23,
+      "type": "Note",
+      "pos": [
+        -985.5604858398438,
+        284.78472900390625
+      ],
+      "size": [
+        282.8599853515625,
+        164.0800018310547
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "text": "",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "Note that Flux dev and schnell do not have any negative prompt so CFG should be set to 1.0. Setting CFG to 1.0 means the negative prompt is ignored."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 18,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -1762.5616455078125,
+        -33.21487045288086
+      ],
+      "size": [
+        315,
+        98
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            35
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            31,
+            39
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 2,
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "widget_ue_connectable": {},
+        "models": [
+          {
+            "name": "flux1-dev-fp8.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/flux1-dev/resolve/main/flux1-dev-fp8.safetensors?download=true",
+            "directory": "checkpoints"
+          }
+        ]
+      },
+      "widgets_values": [
+        "flux1-dev-fp8.safetensors"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "SaveImage",
+      "pos": [
+        -435.5595703125,
+        -31.21493148803711
+      ],
+      "size": [
+        732.0326538085938,
+        559.0853881835938
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 34
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "SaveImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1426.56201171875,
+        -33.21487045288086
+      ],
+      "size": [
+        422.8500061035156,
+        164.30999755859375
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            40
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Positive Prompt)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "cinematic atmopshere cleopatra in news room anchorwoman , rustic arcthitect and large scale   "
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        408.3001403808594,
+        327.2937927246094
+      ],
+      "size": [
+        274.080078125,
+        314.0000305175781
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "cem_13.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadAudio",
+      "pos": [
+        403.0230712890625,
+        690.6533203125
+      ],
+      "size": [
+        274.080078125,
+        136
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            6,
+            25
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "LoadAudio",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ses_cemcuhadar_orginal.mp3",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 6,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        1102.20068359375,
+        273.52789306640625
+      ],
+      "size": [
+        554.9396362304688,
+        882.9396362304688
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 26
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 6
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "frame_rate",
+          "type": "FLOAT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "1.6.1",
+        "Node name for S&R": "VHS_VideoCombine",
+        "widget_ue_connectable": {
+          "frame_rate": true
+        }
+      },
+      "widgets_values": {
+        "frame_rate": 25,
+        "loop_count": 0,
+        "filename_prefix": "AnimateDiff",
+        "format": "video/nvenc_h264-mp4",
+        "pix_fmt": "yuv420p",
+        "bitrate": 10,
+        "megabit": true,
+        "save_metadata": true,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "AnimateDiff_00027-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/nvenc_h264-mp4",
+            "frame_rate": 25,
+            "workflow": "AnimateDiff_00027.png",
+            "fullpath": "D:\\comFY\\output\\AnimateDiff_00027-audio.mp4"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    [
+      6,
+      4,
+      0,
+      6,
+      1,
+      "AUDIO"
+    ],
+    [
+      23,
+      1,
+      0,
+      10,
+      2,
+      "FLOAT_PIPE"
+    ],
+    [
+      24,
+      3,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ],
+    [
+      25,
+      4,
+      0,
+      10,
+      1,
+      "AUDIO"
+    ],
+    [
+      26,
+      10,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      28,
+      11,
+      0,
+      10,
+      3,
+      "FLOAT"
+    ],
+    [
+      29,
+      11,
+      0,
+      6,
+      4,
+      "FLOAT"
+    ],
+    [
+      30,
+      13,
+      0,
+      12,
+      0,
+      "AUDIO"
+    ],
+    [
+      31,
+      18,
+      1,
+      14,
+      0,
+      "CLIP"
+    ],
+    [
+      32,
+      19,
+      0,
+      15,
+      0,
+      "LATENT"
+    ],
+    [
+      33,
+      18,
+      2,
+      15,
+      1,
+      "VAE"
+    ],
+    [
+      34,
+      15,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      18,
+      0,
+      19,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      21,
+      0,
+      19,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      37,
+      20,
+      0,
+      19,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      38,
+      17,
+      0,
+      19,
+      3,
+      "LATENT"
+    ],
+    [
+      39,
+      18,
+      1,
+      20,
+      0,
+      "CLIP"
+    ],
+    [
+      40,
+      14,
+      0,
+      21,
+      0,
+      "CONDITIONING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "frontendVersion": "1.23.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 0.5725176329676203,
+      "offset": [
+        1210.999502551776,
+        335.44291426748737
+      ]
+    }
+  },
+  "version": 0.4
+}
