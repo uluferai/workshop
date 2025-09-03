@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulufer Prompt + Context</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: #0a0a0a;
+            color: #ffffff; 
+            margin: 0; 
+            padding: 20px; 
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Abstract Background Elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 75, 43, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 65, 108, 0.05) 0%, transparent 50%);
+            z-index: -2;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 40%, rgba(255, 65, 108, 0.02) 50%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, rgba(120, 119, 198, 0.02) 50%, transparent 60%);
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+            33% { transform: translateX(30px) translateY(-30px) rotate(120deg); }
+            66% { transform: translateX(-20px) translateY(20px) rotate(240deg); }
+        }
+
+        .container { 
+            max-width: 1200px; 
+            margin: auto; 
+            padding: 60px 40px; 
+            position: relative;
+        }
+
+        h1 { 
+            text-align: center; 
+            color: #ffffff; 
+            margin-bottom: 80px; 
+            font-size: 4rem;
+            font-weight: 100;
+            letter-spacing: -0.05em;
+            position: relative;
+        }
+
+        h1::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            border-radius: 2px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .prompt-block { 
+            padding: 40px; 
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .prompt-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .prompt-block:hover::before {
+            transform: scaleX(1);
+        }
+
+        .prompt-block:hover { 
+            background: rgba(30, 30, 30, 0.9);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-8px);
+        }
+
+        label { 
+            font-size: 1.1rem; 
+            font-weight: 500; 
+            color: #ffffff; 
+            display: block; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+
+        input[type="text"] { 
+            width: 100%; 
+            padding: 20px 0; 
+            margin-bottom: 25px; 
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #ffffff; 
+            font-size: 1rem;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-bottom-color: #ff416c;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        .button-group { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin-top: 20px;
+        }
+
+        .preset-button { 
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 20px; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preset-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 65, 108, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .preset-button:hover::before {
+            left: 100%;
+        }
+
+        .preset-button:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .preset-button.selected { 
+            background: rgba(255, 65, 108, 0.1);
+            color: #ff416c;
+            border-color: #ff416c;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 30px;
+            margin-top: 60px;
+            justify-content: center;
+        }
+
+        .action-button { 
+            background: transparent;
+            color: #ffffff; 
+            border: 2px solid #ffffff;
+            padding: 20px 40px; 
+            font-size: 1rem; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .action-button:hover::before {
+            left: 0;
+        }
+
+        .action-button:hover { 
+            color: #0a0a0a;
+        }
+
+        .clear-button {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .clear-button::before {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .clear-button:hover {
+            color: #ffffff;
+        }
+
+        #output { 
+            margin-top: 60px; 
+            padding: 40px; 
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            min-height: 120px;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        #output::before {
+            content: 'Generated Prompt';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #0a0a0a;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0 15px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .copy-info { 
+            text-align: center; 
+            font-size: 0.9rem; 
+            color: #ff416c; 
+            margin-top: 30px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .copy-info.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Geometric Elements */
+        .geometric-accent {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .geo-1 {
+            top: 10%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            border: 1px solid rgba(255, 65, 108, 0.2);
+            transform: rotate(45deg);
+            animation: rotate 15s linear infinite;
+        }
+
+        .geo-2 {
+            bottom: 20%;
+            left: 5%;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px solid rgba(120, 119, 198, 0.2);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .geo-3 {
+            top: 50%;
+            right: 5%;
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 52px solid rgba(255, 75, 43, 0.1);
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.2); opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 40px 20px; }
+            h1 { font-size: 2.5rem; margin-bottom: 40px; }
+            .grid { grid-template-columns: 1fr; gap: 30px; }
+            .prompt-block { padding: 30px; }
+            .action-buttons { flex-direction: column; align-items: center; }
+            .action-button { min-width: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Geometric Elements -->
+<div class="geometric-accent geo-1"></div>
+<div class="geometric-accent geo-2"></div>
+<div class="geometric-accent geo-3"></div>
+
+<div class="container">
+    <h1>CINEMATIC PROMPT GENERATOR</h1>
+
+    <div class="grid">
+        <div class="prompt-block">
+            <label for="mainPrompt">Main Scene</label>
+            <input type="text" id="mainPrompt" placeholder="A woman walking in the rain...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('mainPrompt', 'A mysterious woman walking through neon-lit streets')">Mysterious Woman</button>
+                <button class="preset-button" onclick="selectPreset('mainPrompt', 'A lone detective sitting in a dark office')">Lone Detective</button>
+                <button class="preset-button" onclick="selectPreset('mainPrompt', 'Two lovers meeting on a rooftop at sunset')">Romantic Meeting</button>
+                <button class="preset-button" onclick="selectPreset('mainPrompt', 'A car chase through city streets')">Car Chase</button>
+                <button class="preset-button" onclick="selectPreset('mainPrompt', 'A warrior standing on a battlefield')">Epic Warrior</button>
+            </div>
+        </div>
+
+        <div class="prompt-block">
+            <label for="directorStyle">Director Style</label>
+            <input type="text" id="directorStyle" placeholder="David Fincher style, Christopher Nolan inspired...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('directorStyle', 'David Fincher style')">Fincher</button>
+                <button class="preset-button" onclick="selectPreset('directorStyle', 'Christopher Nolan inspired')">Nolan</button>
+                <button class="preset-button" onclick="selectPreset('directorStyle', 'Denis Villeneuve aesthetic')">Villeneuve</button>
+                <button class="preset-button" onclick="selectPreset('directorStyle', 'Ridley Scott atmosphere')">Ridley Scott</button>
+                <button class="preset-button" onclick="selectPreset('directorStyle', 'Wes Anderson symmetry')">Anderson</button>
+                <button class="preset-button" onclick="selectPreset('directorStyle', 'Edgar Wright dynamic')">Wright</button>
+            </div>
+        </div>
+        
+        <div class="prompt-block">
+            <label for="lighting">Lighting</label>
+            <input type="text" id="lighting" placeholder="Moody city lights, dramatic shadows...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('lighting', 'dramatic chiaroscuro lighting')">Chiaroscuro</button>
+                <button class="preset-button" onclick="selectPreset('lighting', 'neon noir lighting')">Neon Noir</button>
+                <button class="preset-button" onclick="selectPreset('lighting', 'golden hour backlighting')">Golden Hour</button>
+                <button class="preset-button" onclick="selectPreset('lighting', 'harsh fluorescent lighting')">Fluorescent</button>
+                <button class="preset-button" onclick="selectPreset('lighting', 'soft natural window light')">Natural Light</button>
+                <button class="preset-button" onclick="selectPreset('lighting', 'volumetric fog lighting')">Volumetric</button>
+            </div>
+        </div>
+
+        <div class="prompt-block">
+            <label for="cinematography">Cinematography</label>
+            <input type="text" id="cinematography" placeholder="Symmetrical wide shot, perfect composition...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('cinematography', 'symmetrical composition, rule of thirds')">Symmetrical</button>
+                <button class="preset-button" onclick="selectPreset('cinematography', 'dutch angle, dynamic framing')">Dutch Angle</button>
+                <button class="preset-button" onclick="selectPreset('cinematography', 'extreme close-up, intimate framing')">Close-up</button>
+                <button class="preset-button" onclick="selectPreset('cinematography', 'wide establishing shot')">Wide Shot</button>
+                <button class="preset-button" onclick="selectPreset('cinematography', 'tracking shot, smooth camera movement')">Tracking Shot</button>
+            </div>
+        </div>
+
+        <div class="prompt-block">
+            <label for="sceneDesign">Scene Design</label>
+            <input type="text" id="sceneDesign" placeholder="Foggy city, wet asphalt, retro signs...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('sceneDesign', 'cyberpunk cityscape, neon signs, rain-soaked streets')">Cyberpunk City</button>
+                <button class="preset-button" onclick="selectPreset('sceneDesign', 'abandoned warehouse, industrial decay')">Industrial Decay</button>
+                <button class="preset-button" onclick="selectPreset('sceneDesign', 'luxurious penthouse, modern minimalism')">Modern Luxury</button>
+                <button class="preset-button" onclick="selectPreset('sceneDesign', 'vintage diner, 1950s americana')">Vintage Diner</button>
+                <button class="preset-button" onclick="selectPreset('sceneDesign', 'gothic cathedral, dramatic architecture')">Gothic</button>
+            </div>
+        </div>
+
+        <div class="prompt-block">
+            <label for="shotSelection">Shot Selection</label>
+            <input type="text" id="shotSelection" placeholder="Symmetrical frame, long shot...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('shotSelection', 'birds eye view, top-down perspective')">Bird's Eye</button>
+                <button class="preset-button" onclick="selectPreset('shotSelection', 'low angle shot, heroic perspective')">Low Angle</button>
+                <button class="preset-button" onclick="selectPreset('shotSelection', 'over-the-shoulder shot')">Over Shoulder</button>
+                <button class="preset-button" onclick="selectPreset('shotSelection', 'medium shot, waist up')">Medium Shot</button>
+                <button class="preset-button" onclick="selectPreset('shotSelection', 'extreme wide shot, epic scale')">Extreme Wide</button>
+            </div>
+        </div>
+        
+        <div class="prompt-block">
+            <label for="mood">Mood & Theme</label>
+            <input type="text" id="mood" placeholder="Tension, unease, mystery...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('mood', 'melancholic atmosphere, bittersweet')">Melancholic</button>
+                <button class="preset-button" onclick="selectPreset('mood', 'suspenseful tension, thriller mood')">Suspenseful</button>
+                <button class="preset-button" onclick="selectPreset('mood', 'romantic dreamy, soft emotions')">Romantic</button>
+                <button class="preset-button" onclick="selectPreset('mood', 'action-packed intensity')">Intense Action</button>
+                <button class="preset-button" onclick="selectPreset('mood', 'mysterious noir atmosphere')">Noir Mystery</button>
+                <button class="preset-button" onclick="selectPreset('mood', 'hopeful uplifting, bright future')">Hopeful</button>
+            </div>
+        </div>
+
+        <div class="prompt-block">
+            <label for="quality">Quality & Style</label>
+            <input type="text" id="quality" placeholder="4K, ultra detailed, cinematic...">
+            <div class="button-group">
+                <button class="preset-button" onclick="selectPreset('quality', '8K ultra detailed, photorealistic, cinematic quality')">Ultra HD</button>
+                <button class="preset-button" onclick="selectPreset('quality', 'film grain, 35mm photography, vintage aesthetic')">Film Grain</button>
+                <button class="preset-button" onclick="selectPreset('quality', 'award-winning cinematography, masterpiece')">Award Winning</button>
+                <button class="preset-button" onclick="selectPreset('quality', 'hyperrealistic, professional lighting')">Hyperrealistic</button>
+                <button class="preset-button" onclick="selectPreset('quality', 'IMAX quality, epic scale')">IMAX Scale</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="action-button" onclick="generateAndCopyPrompt()">Generate & Copy</button>
+        <button class="action-button clear-button" onclick="clearAllFields()">Clear All</button>
+    </div>
+
+    <div id="output"></div>
+    <div class="copy-info" id="copyInfo">Prompt copied to clipboard successfully</div>
+</div>
+
+<script>
+let selectedPresets = new Set();
+
+function selectPreset(fieldId, value) {
+    const input = document.getElementById(fieldId);
+    const buttons = event.target.parentNode.querySelectorAll('.preset-button');
+    
+    // Remove selected class from all buttons in this group
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    
+    // Add selected class to clicked button
+    event.target.classList.add('selected');
+    
+    // Set the input value
+    input.value = value;
+    
+    // Auto-generate prompt when preset is selected
+    generatePrompt();
+}
+
+function generatePrompt() {
+    const mainPrompt = document.getElementById('mainPrompt').value;
+    const directorStyle = document.getElementById('directorStyle').value;
+    const lighting = document.getElementById('lighting').value;
+    const cinematography = document.getElementById('cinematography').value;
+    const sceneDesign = document.getElementById('sceneDesign').value;
+    const shotSelection = document.getElementById('shotSelection').value;
+    const mood = document.getElementById('mood').value;
+    const quality = document.getElementById('quality').value;
+    
+    const parts = [mainPrompt, directorStyle, lighting, cinematography, sceneDesign, shotSelection, mood, quality]
+        .filter(part => part.trim() !== '');
+    
+    const finalPrompt = parts.join(', ');
+    document.getElementById('output').textContent = finalPrompt;
+    
+    return finalPrompt;
+}
+
+function generateAndCopyPrompt() {
+    const finalPrompt = generatePrompt();
+    
+    if (finalPrompt.trim() === '') {
+        alert('Please fill in at least one field to generate a prompt.');
+        return;
+    }
+    
+    navigator.clipboard.writeText(finalPrompt)
+        .then(() => {
+            const copyInfo = document.getElementById('copyInfo');
+            copyInfo.classList.add('show');
+            setTimeout(() => {
+                copyInfo.classList.remove('show');
+            }, 3000);
+        })
+        .catch(err => {
+            console.error('Copy failed:', err);
+            alert('Copy failed. Please copy manually:\n\n' + finalPrompt);
+        });
+}
+
+function clearAllFields() {
+    // Clear all input fields
+    document.querySelectorAll('input[type="text"]').forEach(input => {
+        input.value = '';
+    });
+    
+    // Remove all selected states
+    document.querySelectorAll('.preset-button').forEach(button => {
+        button.classList.remove('selected');
+    });
+    
+    // Clear output
+    document.getElementById('output').textContent = '';
+    
+    // Hide copy info
+    document.getElementById('copyInfo').classList.remove('show');
+}
+
+// Auto-generate prompt when typing
+document.querySelectorAll('input[type="text"]').forEach(input => {
+    input.addEventListener('input', generatePrompt);
+});
+</script>
+
+</body>
+</html>
